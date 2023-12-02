@@ -6,8 +6,8 @@ import java.util.ArrayList;
  * @author aleja
  */
 public class Game {
-    int [][] actual = new int [10][10];
-    int [][] nextgen = new int [10][10];
+     int [][] actual = new int [10][10];
+     int [][] nextgen = new int [10][10];
     ArrayList<String> coord = new ArrayList<>();
     int rondas;
     
@@ -54,53 +54,57 @@ public class Game {
         
         for (int i=0; i<rondas;i++){
                 System.out.println("Ronda " + i);
-                imprimirarraylist(actual);
+                nextGen();
+                imprimirtab(coord);
                 
                 
         }
         
     }
     
-    public static ArrayList<String> imprimirarraylist (int[][]actual){
-        ArrayList<String> coord = new ArrayList();
-        for (int i=0; i<10; i++){
-            for (int j=0; j<10;j++){
-                if (actual[i][j]==1){
-                    coord.add(i +":"+j);
-                }
-            }
-        }
-        
+    public void imprimirtab (ArrayList<String> coord){
+       
         System.out.println("Coordenadas de celdas vivas: ");
         for (int k=0; k<coord.size(); k++){
             System.out.print(coord.get(k)+"  ");
         }
-        return coord;
+        
         
     }
     
-    public static int [][] nextGen(int[][]actual, ArrayList<String> coord){
+    public void nextGen(){
+         int[][] newactual = new int[10][10];
+         ArrayList<String> newcoord = new ArrayList<>();
+        for (int k=0; k<coord.size(); k++){
+           char x = (coord.get(0)).charAt(0);
+           char y = (coord.get(0)).charAt(2);
+            int numx = x -'0';
+            int numy = y -'1';
         
-        for (int i=0; i<10; i++){
-            for (int j=0; j<10;j++){
-                int vecinos = contveci(i,j);
-                if ((actual [i][j]==1 && vecinos<2) || (actual [i][j]==1 && vecinos>3)){
-                   coord.remove(actual [i][j]);
+                int vecinos = contveci(x,y);
+                if ((actual [numx][numy]==1 && vecinos<2) || (actual [numx][numy]==1 && vecinos>3)){
+                    newactual[x][y] = 0;
+                    //coord.remove(actual [numx][numy]);
                 }
-                else if (actual [i][j]==0 && vecinos==3){
-                    coord.add(i+":"+j);
+                else if (actual [numx][numy]==0 && vecinos==3){
+                    newactual[x][y] = 1;
+                    newcoord.add(x + ":" + y);
+                    //coord.add(numx+":"+numy);
                   
               }
-                else if (actual [i][j]==0 && vecinos==2){
-                    actual[i][j]=1;
+                else if (actual [numx][numy]==0 && vecinos==2){
+                    newactual[x][y] = 1;
+                    newcoord.add(x + ":" + y);
+                    //actual[numx][numy]=1;
                   
                 }
-               
-                
-            }
+                    
+            
+         
         }
-         return actual;
-        }
+        coord=newcoord;
+        actual=newactual;
+    }
        
         public static int contveci (int po1, int po2){
             int cont=0;

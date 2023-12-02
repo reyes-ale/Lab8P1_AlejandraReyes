@@ -23,7 +23,7 @@ public class Lab8P1_AlejandraReyes {
             int [][] nextgen = new int [10][10];
             System.out.println("Ingrese el numero de rondas: ");
             int rondas = leer.nextInt();
-            llenar(actual);
+            llenar(actual,coord);
             imprimir(actual);
             Game g = new Game(rondas,actual, nextgen,coord);
             g.jugar(rondas);
@@ -38,7 +38,7 @@ public class Lab8P1_AlejandraReyes {
    
        
         
-   public static int [][] llenar (int[][]actual){
+   public static void llenar (int[][]actual,ArrayList<String> coord){
        
         for (int i=0; i<10; i++){
             for (int j=0; j<10;j++){
@@ -47,13 +47,15 @@ public class Lab8P1_AlejandraReyes {
                 }
                 else{
                     actual[i][j]=rand.nextInt(2);
-                    
+                    if (actual[i][j] == 1) {
+                    coord.add(i + ":" + j);
+                }
                 }
                
                 
             }
         }
-        return actual;
+        
    }
    
    
